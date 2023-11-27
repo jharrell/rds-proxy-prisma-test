@@ -11,7 +11,7 @@ const PRISMA_LAYER_PATH = './layers/prisma'
 function preparePrismaLayer() {
   fs.rmSync(PRISMA_LAYER_PATH, { force: true, recursive: true });
   fs.mkdirSync(PRISMA_LAYER_PATH, { recursive: true });
-  const files = ['node_modules/@prisma/client', 'node_modules/prisma/build'];
+  const files = ['node_modules/.prisma', 'node_modules/@prisma/client', 'node_modules/prisma/build'];
   for (const file of files) {
     fs.cpSync(file, path.join(PRISMA_LAYER_PATH, 'nodejs', file), {
       filter: (srcFile) => !srcFile.endsWith('so.node') || srcFile.includes('rhel'),
@@ -42,7 +42,6 @@ export function API({ stack }: StackContext) {
           DATABASE_URL: process.env.DATABASE_URL!,
         },
         nodejs: {
-          format: 'esm',
           esbuild: {
             external: ['@prisma/client', '.prisma']
           },
