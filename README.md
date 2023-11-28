@@ -13,7 +13,7 @@ You'll first need some setup:
 - RDS DB (PostgreSQL)
 - AWS RDS Proxy
 
-Once these are set up, it's time to update the values in our .env file. Update `DATABASE_URL`, `DIRECT_URL`, and `AWS_VPC_ID` with your values. `DATABASE_URL` should reference your RDS Proxy endpoint while `DIRECT_URL` should be your actual database (not proxied).
+Once these are set up, it's time to update the values in our .env file. Rename `.env.example` to `.env` and update `DATABASE_URL`, `DIRECT_URL`, and `AWS_VPC_ID` with your values. `DATABASE_URL` should reference your RDS Proxy endpoint while `DIRECT_URL` should be your actual database (not proxied). `AWS_VPC_ID` should be the VPC that your RDS Proxy instance was deployed to.
 
 ### Install, migrate, and seed
 
