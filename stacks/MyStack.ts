@@ -28,8 +28,8 @@ export function API({ stack }: StackContext) {
     code: Code.fromAsset(PRISMA_LAYER_PATH),
   });
 
-  const vpc = Vpc.fromLookup(stack, 'vpc-59876924', {
-    vpcId: 'vpc-59876924',
+  const vpc = Vpc.fromLookup(stack, process.env.AWS_VPC_ID!, {
+    vpcId: process.env.AWS_VPC_ID!,
   });
 
   const api = new Api(stack, "api", {
