@@ -8,10 +8,13 @@ This is a repo put together to show that Prisma and RDS Proxy work together and 
 
 You'll first need some setup:
 
-- AWS Account
-- AWS VPC
-- RDS DB (PostgreSQL)
-- AWS RDS Proxy
+1. Make sure that you have a working AWS account and that your AWS Credentials are stored at `~/.aws/credentials`. You can learn more about that [here](https://docs.sst.dev/advanced/iam-credentials)
+
+2. Make sure that you have an AWS VPC set up. VPC setup can be a bit thorny, but we just need a default one. [When you create a VPC](https://us-east-1.console.aws.amazon.com/vpcconsole/home?region=us-east-1#CreateVpc:createMode=vpcWithResources) use the "VPC and more" option and make sure that you have at least 2 public subnets.
+
+3. [Set up a PostgreSQL RDS DB](https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1#launch-dbinstance:) using "Easy create". Make sure that you setup `PostgreSQL` and not `Aurora (PostgreSQL Compatible)`. The default settings (Dev/Test, database-1, admin) are all fine.
+
+4. Once your database is setup and ready, [create a RDS Proxy](https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1#create-proxy:) for your database. Make sure that the Proxy is set to the `PostgreSQL` engine family, has a memorable proxy identifier, has an idle client connection timeout at a sane value (5 minutes is fine) and points to your new database in the target group. The rest of the defaults should be fine.
 
 Once these are set up, it's time to update the values in our .env file. Rename `.env.example` to `.env` and update `DATABASE_URL`, `DIRECT_URL`, and `AWS_VPC_ID` with your values. `DATABASE_URL` should reference your RDS Proxy endpoint while `DIRECT_URL` should be your actual database (not proxied). `AWS_VPC_ID` should be the VPC that your RDS Proxy instance was deployed to.
 
